@@ -2,11 +2,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { Menu } from "lucide-react";
-import ThemeToggle from "./theme-toggle";
+import ThemeToggle from "./ThemeToggle";
 
 export default function Navbar() {
   return (
-    <nav className="border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 w-full">
+    <nav className="border-b border-border backdrop-blur px-2 py-3 supports-[backdrop-filter]:bg-secondary/70 w-full">
       <div className="container flex justify-between items-center">
         <div className="flex items-center">
           <Menu />
@@ -16,7 +16,7 @@ export default function Navbar() {
             </span>
           </Link>
         </div>
-        <div className="flex space-x-6 items-center">
+        <div className="flex space-x-6 items-center ">
           <Button>Run</Button>
           <ThemeToggle />
         </div>
