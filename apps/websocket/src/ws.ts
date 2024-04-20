@@ -3,9 +3,9 @@ import { Server as HttpServer } from "http";
 import { fetchS3Folder, saveToS3 } from "./awt";
 import path from "path";
 import { fetchDir, fetchFileContent, saveFile } from "./fs";
-import { TerminalManager } from "./pty";
+import { createPty } from "./pty";
+import { IPty } from "node-pty";
 
-const terminalManager = new TerminalManager();
 
 export function initWs(httpServer: HttpServer) {
   const io = new Server(httpServer, {
@@ -19,13 +19,15 @@ export function initWs(httpServer: HttpServer) {
     // Auth checks should happen here
     const roomId = socket.handshake.query.roomId as string;
 
+    console.log("User Conneted", socket.id)
+
     if (!roomId) {
-      socket.disconnect();
-      terminalManager.clear(socket.id);
+      socket.disconnect()
       return;
     }
 
-    await fetchS3Folder(`code/${roomId}`, path.join(__dirname, `../tmp/${roomId}`));
+
+    // await fetchS3Folder(`code/${roomId}`, path.join(__dirname, `../tmp/${roomId}`));
     socket.emit("loaded", {
       rootContent: await fetchDir(path.join(__dirname, `../tmp/${roomId}`), "")
     });
@@ -35,7 +37,7 @@ export function initWs(httpServer: HttpServer) {
 
 function initHandlers(socket: Socket, roomId: string) {
   socket.on("disconnect", () => {
-    console.log("user disconnected");
+    console.log("user disconnected", socket.id);
   });
 
   socket.on("fetchDir", async (dir: string, callback) => {
@@ -59,22 +61,20 @@ function initHandlers(socket: Socket, roomId: string) {
     await saveToS3(`code/${roomId}`, filePath, content);
   });
 
-  const terminalID = socket.id;
+  let ptyTerm: IPty | undefined;
 
   socket.on("requestTerminal", async () => {
-    terminalManager.createPty(terminalID, roomId, (data) => {
-      socket.emit('terminal', {
-        data, terminalID
-      });
+    ptyTerm = createPty(roomId, (data) => {
+      socket.emit('terminal', data);
     });
   });
 
   socket.on('disconnect', () => {
-    terminalManager.clear(terminalID)
+    if (ptyTerm) ptyTerm.kill()
   })
 
-  socket.on("terminalData", async ({ data, terminalId }: { data: string, terminalId: string }) => {
-    terminalManager.write(terminalID, data);
+  socket.on("terminalData", (data) => {
+    if (ptyTerm) ptyTerm.write(data)
   });
 
 }

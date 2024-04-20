@@ -6,7 +6,7 @@ import ThemeToggle from "./ThemeToggle";
 
 export default function Navbar() {
   return (
-    <nav className="border-b border-border backdrop-blur px-2 py-3 supports-[backdrop-filter]:bg-secondary/70 w-full">
+    <nav className="border-b border-border backdrop-blur px-2 py-3 supports-[backdrop-filter]:bg-secondary/70 w-screen">
       <div className="container flex justify-between items-center">
         <div className="flex items-center">
           <Menu />

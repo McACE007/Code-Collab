@@ -3,57 +3,28 @@ import path from "path";
 
 const SHELL = "bash";
 
-export class TerminalManager {
-  private terminalSessions: { [id: string]: { terminal: IPty, roomId: string; } } = {};
+export function createPty(roomId: string, onData: (data: string) => void) {
+  try {
+    let term = spawn(SHELL, [], {
+      cols: 40,
+      rows: 25,
+      name: 'xterm-color',
+      cwd: path.join(__dirname, `../tmp/${roomId}`)
+    });
 
-  constructor() {
-    this.terminalSessions = {};
-  }
+    term.onData((data: string) => {
+      return onData(data)
+    })
 
-  createPty(id: string, roomId: string, onData: (data: string, id: number) => void) {
-    try {
+    term.onExit(() => {
+      term.kill()
+      console.log("User exited terminal", roomId)
+    });
 
-      let term = spawn(SHELL, [], {
-        cols: 100,
-        rows: 24,
-        name: 'xterm-color',
-        cwd: path.join(__dirname, `../tmp/${roomId}`)
-      });
+    return term;
 
-      term.onData((data: string) => onData(data, term.pid));
-
-      this.terminalSessions[id] = {
-        terminal: term,
-        roomId
-      };
-
-      term.onExit(() => {
-        delete this.terminalSessions[term.pid];
-      });
-      return term;
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  hasTerminalSession(terminalId: string): boolean {
-    return !!this.terminalSessions[terminalId];
-  }
-
-  getTerminal(terminalId: string): IPty | undefined {
-    return this.terminalSessions[terminalId]?.terminal;
-  }
-
-  getRoomId(terminalId: string): string | undefined {
-    return this.terminalSessions[terminalId]?.roomId;
-  }
-
-  write(terminalId: string, data: string) {
-    this.terminalSessions[terminalId]?.terminal.write(data);
-  }
-
-  clear(terminalId: string) {
-    this.terminalSessions[terminalId]?.terminal.kill();
-    delete this.terminalSessions[terminalId];
+  } catch (error) {
+    console.log(error)
   }
 }
+

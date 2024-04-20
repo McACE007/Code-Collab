@@ -10,7 +10,10 @@ export const fetchDir = (dir: string, baseDir: string): Promise<FileType[]> => {
       if (err) {
         reject(err);
       } else {
-        resolve(files.map(file => ({ type: file.isDirectory() ? Type.DIRECTORY : Type.FILE, name: file.name, path: path.join(baseDir, `/${file.name}`) })));
+        resolve(files.map(file => {
+          return { type: file.isDirectory() ? Type.DIRECTORY : Type.FILE, name: file.name, path: path.join(baseDir, `/${file.name}`) }
+        }
+        ))
       }
     });
   });

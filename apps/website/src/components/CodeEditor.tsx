@@ -32,6 +32,7 @@ export default function CodeEditor({ selectedFile }: { selectedFile: File | unde
 
     <Editor
       height="100%"
+      width="100%"
       theme={codeEditorTheme}
       language={language}
       value={selectedFile.content}
