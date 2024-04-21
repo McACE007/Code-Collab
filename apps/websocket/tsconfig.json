@@ -8,7 +8,7 @@
     "sourceMap": true,
     "outDir": "./dist",
     "rootDir": "./src",
-    "strict": true,
+    "strict": false,
     "moduleResolution": "node",
     "baseUrl": "src",
     "esModuleInterop": true,

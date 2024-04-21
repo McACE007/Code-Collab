@@ -1,3 +1,4 @@
+"use client"
 import { useSocket } from "@/hooks/useSocket";
 import { FitAddon } from "@xterm/addon-fit";
 import { Terminal } from "@xterm/xterm"
@@ -62,7 +63,7 @@ export default function XTerm() {
       socket.emit("terminalData", data)
     })
 
-    socket.emit('terminalData', '\n');
+    socket.emit('terminalData', 'clear\n');
 
     return () => {
       socket.off("terminal");
