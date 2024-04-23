@@ -32,6 +32,5 @@ export default function Home() {
         <ThemeToggle />
       </div>
     </div>
-
   );
 }

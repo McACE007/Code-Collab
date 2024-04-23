@@ -9,8 +9,9 @@ import { SocketIOProvider } from 'y-socket.io'
 import "./CodeEditor.css"
 import { useSocket } from "@/hooks/useSocket";
 import { debounce } from "@/utils/debounce"
+import { useFileContext } from "@/contexts/FileContext";
 
-export default function CodeEditor({ selectedFile, ydoc, provider }: { selectedFile: File | undefined, ydoc: Y.Doc, provider: SocketIOProvider }) {
+export default function CodeEditor({ ydoc, provider }: { ydoc: Y.Doc, provider: SocketIOProvider }) {
   const { theme, resolvedTheme } = useTheme();
   const codeEditorTheme = themeMapper(theme, resolvedTheme);
   const editorRef = useRef<any>(null)
@@ -18,6 +19,8 @@ export default function CodeEditor({ selectedFile, ydoc, provider }: { selectedF
   const binding = useRef<MonacoBinding | null>(null);
   const [t, setT] = useState<null | undefined>(null);
   const socket = useSocket();
+  const { selectedFile } = useFileContext();
+
 
   const handleOnDidMount: OnMount = (editor, monaco) => {
     editorRef.current = editor;
@@ -25,7 +28,7 @@ export default function CodeEditor({ selectedFile, ydoc, provider }: { selectedF
     setT(undefined);
   }
   useEffect(() => {
-    if (ydoc && editorRef.current) {
+    if (ydoc && editorRef.current && selectedFile) {
       ytext.current = ydoc.getText(selectedFile?.name || "code");
       binding.current = new MonacoBinding(ytext.current, editorRef.current.getModel(), new Set([editorRef.current]), provider.awareness)
     }

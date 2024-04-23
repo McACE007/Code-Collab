@@ -23,9 +23,9 @@
 }
 
 .xterm .xterm-rows {
-  width: 316px;
-  height: 410px;
-  padding: 10px;
+  /* width: 316px; */
+  /* height: 410px; */
+  /* padding: 10px; */
 }
 
 .xterm .xterm-helper-textarea {
@@ -70,13 +70,13 @@
     left: 0;
     top: 0;
     bottom: 0;
-    width: 330px;
-    height: 420px;
+    /* width: 330px; */
+    /* height: 420px; */
 }
 
 .xterm .xterm-screen {
     position: relative;
-    width: 316px;
+    /* width: 316px; */
 }
 
 .xterm .xterm-screen canvas {

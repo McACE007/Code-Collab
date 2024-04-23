@@ -1,8 +1,8 @@
 import { SubFileTreePropsType } from "@/types/FileTreeTypes";
 import { useState } from "react";
 import FileTreeFileItem from "./FileTreeFileItem";
-import { SubFileTree } from "./FileTree";
 import { isChildSelected } from "@/utils/fileTreeUtils";
+import { SubFileTree } from "./FileTree";
 
 export default function FileTreeDirectoryItem({ directory, selectedFile, onSelect }: SubFileTreePropsType) {
   let defaultOpen = false;

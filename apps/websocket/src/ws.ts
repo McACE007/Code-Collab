@@ -59,7 +59,7 @@ function initHandlers(socket: Socket, roomId: string, ydoc: Y.Doc, ysocketio: YS
     const selectedFileName = filePath.split('/').pop()
     const fullPath = path.join(__dirname, `../tmp/${roomId}/${filePath}`);
     const data = await fetchFileContent(fullPath);
-    const ytext = ydoc.getText(selectedFileName);
+    const ytext = ydoc?.getText(selectedFileName);
     if (ytext.length === 0) {
       ytext.insert(0, data)
     }

@@ -4,15 +4,16 @@ import { FitAddon } from "@xterm/addon-fit";
 import { Terminal } from "@xterm/xterm"
 import { useEffect, useRef } from "react"
 import "./xterm-helper-hide.css"
+import { Card } from "./ui/card";
 
-export default function XTerm() {
+function XTerm() {
   const term = useRef<Terminal | null>(null);
   const fitAddon = useRef<FitAddon | null>(null)
   const divRef = useRef<HTMLDivElement | null>(null);
   const socket = useSocket();
 
   useEffect(() => {
-    if (!divRef || !divRef.current) return;
+    if (!divRef.current) return;
 
     term.current = new Terminal({
       fontSize: 13,
@@ -72,8 +73,9 @@ export default function XTerm() {
 
 
   return (
-    <div className="w-full h-full px-2 py-3 flex flex-col space-y-10 justify-center" ref={divRef}>
-      <iframe width={"330px"} height={"300px"} src={`http://localhost:6000`} />
-    </div>
+    <Card className="h-fit w-fit p-2" ref={divRef}>
+    </Card>
   )
 }
+
+export default XTerm;
