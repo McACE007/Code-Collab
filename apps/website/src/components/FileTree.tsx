@@ -1,9 +1,10 @@
 import { buildFileTree, sortDir, sortFile } from "@/utils/fileTreeUtils"
 import { Fragment, useEffect, useMemo } from "react";
-import { RootFileTreePropsType, SubFileTreePropsType } from "@/types/FileTreeTypes";
+import { SubFileTreePropsType } from "@/types/FileTreeTypes";
 import FileTreeDirectoryItem from "./FileTreeDirectoryItem";
 import FileTreeFileItem from "./FileTreeFileItem";
 import { useFileContext } from "@/contexts/FileContext";
+
 
 export default function FileTree() {
   const { fileStructure, selectedFile, onSelect } = useFileContext()
@@ -21,8 +22,9 @@ export default function FileTree() {
 }
 
 export function SubFileTree({ directory, selectedFile, onSelect }: SubFileTreePropsType) {
+
   return (
-    <div>
+    <div className="h-full w-full">
       {directory.dirs.sort(sortDir).map(dir => {
         return <Fragment key={dir.id}>
           <FileTreeDirectoryItem directory={dir} onSelect={onSelect} selectedFile={selectedFile} />

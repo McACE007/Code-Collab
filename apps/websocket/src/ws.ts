@@ -31,7 +31,7 @@ export function initWs(httpServer: HttpServer) {
       return;
     }
 
-    // await fetchS3Folder(`code/${roomId}`, path.join(__dirname, `../tmp/${roomId}`));
+    await fetchS3Folder(`code/${roomId}`, path.join(__dirname, `../tmp/${roomId}`));
     const rootDir = await fetchDir(path.join(__dirname, `../tmp/${roomId}`), "");
     socket.emit("loaded", {
       rootContent: rootDir
@@ -60,7 +60,7 @@ function initHandlers(socket: Socket, roomId: string, ydoc: Y.Doc, ysocketio: YS
     const fullPath = path.join(__dirname, `../tmp/${roomId}/${filePath}`);
     const data = await fetchFileContent(fullPath);
     const ytext = ydoc?.getText(selectedFileName);
-    if (ytext.length === 0) {
+    if (ytext?.length === 0) {
       ytext.insert(0, data)
     }
     callback(data);

@@ -6,8 +6,8 @@ const SHELL = "bash";
 export function createPty(roomId: string, onData: (data: string) => void) {
   try {
     let term = spawn(SHELL, [], {
-      cols: 40,
-      rows: 25,
+      cols: 35,
+      rows: 22,
       name: 'xterm-color',
       cwd: path.join(__dirname, `../tmp/${roomId}`)
     });

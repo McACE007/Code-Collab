@@ -58,7 +58,7 @@ export function buildFileTree(data: File[]): Directory {
   return rootDir;
 }
 
-function getDepth(rootDir: Directory, curDepth: number) {
+export function getDepth(rootDir: Directory, curDepth: number) {
   rootDir.files.forEach((file) => {
     file.depth = curDepth + 1;
   });

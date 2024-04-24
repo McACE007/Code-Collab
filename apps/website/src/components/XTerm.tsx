@@ -34,8 +34,8 @@ function XTerm() {
         brightRed: '#f54235',
       },
       allowTransparency: true,
-      cols: 40,
-      rows: 25,
+      cols: 35,
+      rows: 22,
     });
     term.current.open(divRef.current!)
     fitAddon.current = new FitAddon()
@@ -73,7 +73,7 @@ function XTerm() {
 
 
   return (
-    <Card className="h-fit w-fit p-2" ref={divRef}>
+    <Card className="h-fit w-fit p-2 dark:bg-dark dark:border-darkHover" ref={divRef}>
     </Card>
   )
 }
