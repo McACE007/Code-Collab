@@ -26,7 +26,7 @@ function getIconHelper() {
   cache.set("ico", <FcPicture />);
   cache.set("c", <SiC />)
   cache.set("cpp", <SiCplusplus />)
-  cache.set('python', <SiPython />)
+  cache.set('py', <SiPython />)
   cache.set("txt", <AiFillFileText color="white" />);
   cache.set("closedDirectory", <FcFolder />);
   cache.set("openDirectory", <FcOpenedFolder />);
