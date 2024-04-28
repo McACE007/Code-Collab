@@ -32,8 +32,8 @@ function TabContextProvider({ children }: { children: ReactNode }) {
     [TABS.CONSOLE]: <ConsoleTab />
   })
   const tabIcons = {
-    [TABS.FILES]: <FilesIcon size={32} />,
-    [TABS.CONSOLE]: <TerminalSquareIcon size={32} />
+    [TABS.FILES]: <FilesIcon size={36} className="hover:" />,
+    [TABS.CONSOLE]: <TerminalSquareIcon size={36} />
   }
 
   return (

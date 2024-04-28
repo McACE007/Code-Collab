@@ -5,7 +5,7 @@ import path from "path";
 import { fetchDir, fetchFileContent, saveFile } from "./fs";
 import { createPty } from "./pty";
 import { IPty } from "node-pty";
-import { Document, YSocketIO } from "y-socket.io/dist/server"
+import { YSocketIO } from "y-socket.io/dist/server"
 import * as Y from "yjs"
 
 

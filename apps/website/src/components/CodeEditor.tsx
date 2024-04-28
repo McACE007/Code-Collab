@@ -9,8 +9,11 @@ import { useSocket } from "@/hooks/useSocket";
 import { debounce } from "@/utils/debounce"
 import { useFileContext } from "@/contexts/FileContext";
 import { useYjs } from "@/hooks/useYjs";
+import { cn } from "@/lib/utils";
+import useTab from "@/hooks/useTabs";
 
 export default function CodeEditor() {
+  const { isSidebarOpen } = useTab();
   const { theme, resolvedTheme } = useTheme();
   const codeEditorTheme = themeMapper(theme, resolvedTheme);
   const editorRef = useRef<any>(null)
@@ -21,12 +24,12 @@ export default function CodeEditor() {
   const { ydoc, provider } = useYjs();
   const { selectedFile } = useFileContext();
 
-
   const handleOnDidMount: OnMount = (editor, monaco) => {
     editorRef.current = editor;
     editor.focus();
     setT(undefined);
   }
+
 
   useEffect(() => {
     if (ydoc && editorRef.current && selectedFile) {
@@ -48,6 +51,9 @@ export default function CodeEditor() {
     case "js":
       language = "javascript"
       break;
+    case "jsx":
+      language = "javascript"
+      break;
     case "ts":
       language = "typescript"
       break;
@@ -60,15 +66,30 @@ export default function CodeEditor() {
 
 
   return (
-    <Editor
-      height="100%"
-      width="100%"
-      theme={codeEditorTheme}
-      language={language}
-      onChange={debounce((value) => {
-        socket?.emit("updateContent", { path: selectedFile.path, content: value });
-      }, 1500)}
-      onMount={handleOnDidMount} />
+    <div className={
+      cn("h-full w-full", {
+        "md:w-[calc(100%-300px)]": isSidebarOpen,
+        "md:w-screen": !isSidebarOpen,
+      })
+    }>
+      <Editor
+        height="100%"
+        width="100%"
+        theme={codeEditorTheme}
+        options={{
+          fontSize: 16,
+          mouseWheelZoom: true,
+          autoIndent: "full",
+          minimap: {
+            enabled: false,
+          },
+        }}
+        language={language}
+        onChange={debounce((value) => {
+          socket?.emit("updateContent", { path: selectedFile.path, content: value });
+        }, 1500)}
+        onMount={handleOnDidMount} />
+    </div >
   )
 }
 

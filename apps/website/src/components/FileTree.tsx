@@ -22,9 +22,8 @@ export default function FileTree() {
 }
 
 export function SubFileTree({ directory, selectedFile, onSelect }: SubFileTreePropsType) {
-
   return (
-    <div className="h-full w-full">
+    <div className="w-full" style={{ marginLeft: `${directory.depth * 15}px` }}>
       {directory.dirs.sort(sortDir).map(dir => {
         return <Fragment key={dir.id}>
           <FileTreeDirectoryItem directory={dir} onSelect={onSelect} selectedFile={selectedFile} />

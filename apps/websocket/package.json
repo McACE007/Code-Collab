@@ -5,8 +5,8 @@
   "scripts": {
     "build": "tsc",
     "clean": "rm -rf dist",
-    "dev": "nodemon --exec \"node -r esbuild-register ./src/index.ts\" -e .ts",
-    "start": "node -r esbuild-register ./src/index.ts"
+    "dev": "nodemon ./src/index.ts -i tmp",
+    "start": "node dist/index.js"
   },
   "keywords": [],
   "author": "",
@@ -23,6 +23,7 @@
     "express": "^4.19.2",
     "node-pty": "^1.0.0",
     "socket.io": "^4.7.5",
+    "ts-node": "^10.9.2",
     "typescript": "^5.4.5",
     "y-socket.io": "^1.1.3"
   }

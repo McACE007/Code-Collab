@@ -9,9 +9,9 @@ export default function FileTreeFileItem({ file, icon, selectedFile, onClick }: 
 
   return (
     <button onClick={onClick} className="w-full">
-      <div className={cn("flex items-center hover:cursor-pointer hover:bg-primary/20 text-foreground font-medium", {
-        "bg-primary/50": isSelected,
-        "bg-transparent": !isSelected,
+      <div className={cn("flex items-center hover:cursor-pointer hover:bg-darkHover/30  dark:hover:bg-darkHover/90 font-medium hover:text-foreground", {
+        "bg-darkHover/20 dark:bg-darkHover/70 text-foreground": isSelected,
+        "bg-transparent text-muted-foreground": !isSelected,
       }, `pl-[${depth * 16}px]`)}>
         <div className="flex w-8 h-8 justify-center items-center">
           {getIcon(icon, file.name.split('.').pop() || "")}

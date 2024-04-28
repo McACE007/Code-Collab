@@ -5,11 +5,13 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useToast } from "@/components/ui/use-toast";
+import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
+import { copyS3Folder } from "@/utils/awsUtils";
+import { createResources } from "@/utils/kubeUtils";
 
 export default function Home() {
   const [isNew, setIsNew] = useState(false);
@@ -17,7 +19,6 @@ export default function Home() {
   const [roomId, setRoomId] = useState('');
   const [language, setLanguage] = useState('');
   const [isLoading, setLoading] = useState(false);
-  const { toast } = useToast();
   const router = useRouter()
 
   useEffect(() => {
@@ -25,31 +26,21 @@ export default function Home() {
   }, [isNew])
 
   async function handleJoin() {
-    if (!roomId || !language) return;
-
-    try {
-      setLoading(true)
-      const response = await fetch(`http://localhost:3001/project`, {
-        method: "POST",
-        headers: {
-          Accept: 'application.json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          roomId, language, username
-        })
-      })
-      if (response.status === 200) {
-        toast({ title: "Created a new Room successfully" })
-      } else {
-        toast({ title: "Failed to create a room", description: "Requested room was not created due to some issue with the server. Please try again.", variant: 'destructive' })
-      }
-    } catch (e) {
-      toast({ title: "Failed to create a room", description: "Requested room was not created due to some issue with the server. Please try again.", variant: 'destructive' })
-    } finally {
-      setLoading(false)
+    setLoading(prev => !prev);
+    if (!roomId || !language) {
+      toast.error("Room ID and Language can't be empty")
+      return;
     }
-    router.push(`editor/${roomId}`)
+    await copyS3Folder(`base/${language}`, `code/${roomId}`);
+    toast("Trying to create resources for you")
+    // try {
+    //   await createResources(roomId);
+    toast.success("Resources created successfully")
+    // } catch (e) {
+    //   toast("Failed to create resources. Please try again.")
+    // }
+    setLoading(prev => !prev);
+    router.push(`editor/${roomId}?language=${language}`)
   }
 
   return (

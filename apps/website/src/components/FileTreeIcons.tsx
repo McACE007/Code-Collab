@@ -5,6 +5,9 @@ import {
   SiJavascript,
   SiTypescript,
   SiJson,
+  SiC,
+  SiCplusplus,
+  SiPython,
 } from "react-icons/si";
 import { FcFolder, FcOpenedFolder, FcPicture, FcFile } from "react-icons/fc";
 import { AiFillFileText } from "react-icons/ai";
@@ -21,6 +24,9 @@ function getIconHelper() {
   cache.set("png", <FcPicture />);
   cache.set("jpg", <FcPicture />);
   cache.set("ico", <FcPicture />);
+  cache.set("c", <SiC />)
+  cache.set("cpp", <SiCplusplus />)
+  cache.set('python', <SiPython />)
   cache.set("txt", <AiFillFileText color="white" />);
   cache.set("closedDirectory", <FcFolder />);
   cache.set("openDirectory", <FcOpenedFolder />);
