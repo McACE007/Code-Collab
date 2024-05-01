@@ -1,4 +1,4 @@
-import { File, Type } from "@repo/types/src";
+import { File, Type } from "@/types/FileTreeTypes";
 import { useEffect, useState } from "react";
 import { useSocket } from "./useSocket";
 

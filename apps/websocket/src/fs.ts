@@ -1,5 +1,5 @@
 import fs from "fs";
-import { File, Type } from "@repo/types/src"
+import { File, Type } from "./types"
 import path from 'path'
 
 type FileType = Partial<File>

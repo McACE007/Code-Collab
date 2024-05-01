@@ -12,7 +12,7 @@ import * as Y from "yjs"
 export function initWs(httpServer: HttpServer) {
   const io = new Server(httpServer, {
     cors: {
-      origin: ["http://proposal-processor-permissions-application.trycloudflare.com", "https://proposal-processor-permissions-application.trycloudflare.com"],
+      origin: "*",
       methods: ["GET", "POST"],
       credentials: true,
     },
@@ -72,7 +72,7 @@ function initHandlers(socket: Socket, roomId: string, ydoc: Y.Doc, ysocketio: YS
     const fullPath = path.join(__dirname, `../tmp/${roomId}/${filePath}`);
     const ytext = ydoc.getText(selectedFileName);
     await saveFile(fullPath, ytext.toJSON());
-    // await saveToS3(`code/${roomId}`, filePath, content);
+    await saveToS3(`code/${roomId}`, filePath, content);
   });
 
   let ptyTerm: IPty | undefined;

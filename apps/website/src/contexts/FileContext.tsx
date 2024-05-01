@@ -1,5 +1,5 @@
 import { useFile } from "@/hooks/useFile";
-import { File } from "@repo/types/src";
+import { File } from "@/types/FileTreeTypes";
 import { Dispatch, ReactNode, SetStateAction, createContext, useContext } from "react"
 
 type FileContextProps = {

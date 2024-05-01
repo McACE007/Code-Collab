@@ -34,7 +34,7 @@ export default function CodeEditor() {
   useEffect(() => {
     if (ydoc && editorRef.current && selectedFile) {
       ytext.current = ydoc.getText(selectedFile?.name || "code");
-      binding.current = new MonacoBinding(ytext.current, editorRef.current.getModel(), new Set([editorRef.current]), provider.awareness)
+      binding.current = new MonacoBinding(ytext.current, editorRef.current.getModel(), new Set([editorRef.current]), provider?.awareness)
     }
     return () => {
       ytext.current = null
@@ -85,6 +85,7 @@ export default function CodeEditor() {
           },
         }}
         language={language}
+        //@ts-ignore
         onChange={debounce((value) => {
           socket?.emit("updateContent", { path: selectedFile.path, content: value });
         }, 1500)}

@@ -1,4 +1,4 @@
-import { Directory, Type, File } from "@repo/types/src"
+import { Directory, Type, File } from "@/types/FileTreeTypes"
 
 export function buildFileTree(data: File[]): Directory {
   const dirs = data.filter(x => x.type === Type.DIRECTORY);

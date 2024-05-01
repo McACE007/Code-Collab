@@ -22,10 +22,10 @@ coverage
 .vercel
 
 # Build Outputs
-.next/
+# .next/
 out/
 build
-dist
+# dist
 
 tmp
 
