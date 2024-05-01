@@ -12,8 +12,9 @@ import * as Y from "yjs"
 export function initWs(httpServer: HttpServer) {
   const io = new Server(httpServer, {
     cors: {
-      origin: "*",
+      origin: ["http://proposal-processor-permissions-application.trycloudflare.com", "https://proposal-processor-permissions-application.trycloudflare.com"],
       methods: ["GET", "POST"],
+      credentials: true,
     },
   });
 

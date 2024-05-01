@@ -10,8 +10,7 @@ import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
-import { copyS3Folder } from "@/utils/awsUtils";
-import { createResources } from "@/utils/kubeUtils";
+import { EXECUTION_ENGINE_URI } from "@/config";
 
 export default function Home() {
   const [isNew, setIsNew] = useState(false);
@@ -31,15 +30,29 @@ export default function Home() {
       toast.error("Room ID and Language can't be empty")
       return;
     }
-    await copyS3Folder(`base/${language}`, `code/${roomId}`);
-    toast("Trying to create resources for you")
-    // try {
-    //   await createResources(roomId);
-    toast.success("Resources created successfully")
-    // } catch (e) {
-    //   toast("Failed to create resources. Please try again.")
-    // }
-    setLoading(prev => !prev);
+    try {
+      setLoading(true)
+      const response = await fetch("http://roommates-week-goto-johns.trycloudflare.com/project", {
+        method: "POST",
+        headers: {
+          Accept: 'application.json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          roomId, language, username
+        })
+      })
+      console.log(response)
+      if (response.status === 200) {
+        toast.success("Resources created successfully")
+      } else {
+        toast.success("Resources was not created. Please try again.")
+      }
+    } catch (e) {
+      toast.success("Resources was not created. Please try again.")
+    } finally {
+      setLoading(prev => !prev);
+    }
     router.push(`editor/${roomId}?language=${language}`)
   }
 

@@ -9,7 +9,9 @@ export default function SocketProvider({ children }: { children?: ReactNode }) {
   const roomId = useParams().roomId.at(0);
 
   useEffect(() => {
-    const _socket = io(`${EXECUTION_ENGINE_URI}?roomId=${roomId}`);
+    const _socket = io(`${EXECUTION_ENGINE_URI}?roomId=${roomId}`, {
+      transports: ['websocket']
+    });
     setSocket(_socket);
 
     return () => {
