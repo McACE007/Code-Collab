@@ -9,20 +9,20 @@ import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { v4 as uuid } from "uuid";
+import { v4 as uuid, v4 } from "uuid";
 import { EXECUTION_ENGINE_URI } from "@/config";
 
 export default function Home() {
-  const [isNew, setIsNew] = useState(false);
+  // const [isNew, setIsNew] = useState(false);
   const [username, setUsername] = useState('');
   const [roomId, setRoomId] = useState('');
   const [language, setLanguage] = useState('');
   const [isLoading, setLoading] = useState(false);
   const router = useRouter()
 
-  useEffect(() => {
-    setRoomId(uuid())
-  }, [isNew])
+  // useEffect(() => {
+  //   setRoomId(uuid())
+  // }, [isNew])
 
   async function handleJoin() {
     setLoading(prev => !prev);
@@ -32,7 +32,7 @@ export default function Home() {
     }
     try {
       setLoading(true)
-      const response = await fetch("http://roommates-week-goto-johns.trycloudflare.com/project", {
+      const response = await fetch(`${EXECUTION_ENGINE_URI}/project`, {
         method: "POST",
         headers: {
           Accept: 'application.json',
@@ -62,23 +62,21 @@ export default function Home() {
       </div>
       <Card className="border-border">
         <CardHeader className="text-3xl font-bold text-foreground">
-          {isNew ? "Create a new Room" : "Join a Room"}
+          Join a Room
         </CardHeader>
         <CardContent>
           <div className="space-y-4 mb-6">
             <Input placeholder="Room ID" value={roomId} onChange={e => setRoomId(e.target.value)} />
-            <Input placeholder="Username" value={username} onChange={e => setUsername(e.target.value)} />
-            {isNew ? (
-              <ComboboxDemo value={language} setValue={setLanguage} />
-            ) : null}
+            {/* <Input placeholder="Username" value={username} onChange={e => setUsername(e.target.value)} /> */}
+            <ComboboxDemo value={language} setValue={setLanguage} />
           </div>
           <Button type="button" variant="default" className="w-full" onClick={handleJoin}>{isLoading ? <Loader2 className="animate-spin" /> : "Join"}</Button>
         </CardContent>
         <CardFooter>
           <Label className="text-foreground">
-            {isNew ? "Already have an Room Id" : "Don't have an Room Id?"}
+            Don't have an Room Id?
           </Label>
-          <Button variant="link" onClick={() => setIsNew(prev => !prev)}>{!isNew ? "Create One" : "Have an Id"}</Button>
+          <Button variant="link" onClick={() => setRoomId(v4())}>Generate One</Button>
         </CardFooter>
       </Card>
       <div className="fixed bottom-20 right-32">

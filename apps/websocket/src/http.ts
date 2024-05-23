@@ -8,6 +8,8 @@ export function initHttp(app: Express) {
   app.post("/project", async (req, res) => {
     const { roomId, language } = req.body;
 
+    console.log(roomId, language)
+
     if (!roomId) {
       res.status(400).send("Bad request");
       return;

@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader } from "./ui/card";
 import { Input } from "./ui/input";
+import { HOSTED_URL } from "@/config";
 
 
 export const Output = () => {
-  const [url, setUrl] = useState("http://localhost:3002")
+  const [url, setUrl] = useState(HOSTED_URL)
 
   return (
     <Card className="w-full h-1/2 mb-2 flex flex-col items-center justify-center p-2 space-y-2  dark:bg-dark dark:border-darkHover">

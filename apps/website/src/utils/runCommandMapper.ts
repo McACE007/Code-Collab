@@ -7,7 +7,7 @@ export function runCommandMapper(language: string) {
       return "gcc -o main main.c && ./main\n"
 
     case "cpp":
-      return "gcc -o main main.cpp && ./main\n"
+      return "g++ -o main main.cpp && ./main\n"
 
     case "python":
       return "python main.py\n"

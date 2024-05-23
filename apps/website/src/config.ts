@@ -1,1 +1,2 @@
-export const EXECUTION_ENGINE_URI = "ws://ec2-52-66-245-21.ap-south-1.compute.amazonaws.com/socket.io";
+export const EXECUTION_ENGINE_URI = "http://ec2-3-0-51-125.ap-southeast-1.compute.amazonaws.com";
+export const HOSTED_URL = "http://ec2-3-0-51-125.ap-southeast-1.compute.amazonaws.com/output";
