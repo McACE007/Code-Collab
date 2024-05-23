@@ -57,4 +57,4 @@ Code Collab aims to provide a robust platform for developers to collaborate in r
 
 | Editor Page with FileTree  | Editor Page with Console  |
 |------|-------|
-|<img src="./screenshots/editor-with-filetree" width="600">|<img src="screenshots/editor-with-console.png" width="600">|
+|<img src="./screenshots/editor-with-filetree.png" width="600">|<img src="screenshots/editor-with-console.png" width="600">|
