@@ -1,81 +1,60 @@
-# Turborepo starter
+# Code Collab: A Real-Time Collaborative Coding Platform
 
-This is an official starter Turborepo.
+## Overview
+Code Collab is a real-time collaborative coding platform designed to facilitate seamless teamwork among developers. The application is built using Next.js, leveraging modern web technologies and a robust backend to provide an intuitive and efficient coding environment. The platform supports multiple programming languages, including C, C++, Python, Node.js, and React, allowing users to create and join coding sessions in their preferred language.
 
-## Using this example
+## Features
 
-Run the following command:
+### Landing Page
+- **Join a Room**: The base route "/" features a Card component where users can enter a room ID and username to join an existing coding session.
+- **Create a Room**: Users can create a new room by clicking the "Create one" button, which changes the card's heading to "Create a Room" and provides input fields for room ID, username, and a language selection combobox.
 
-```sh
-npx create-turbo@latest
-```
+### Room Creation
+- **Language Selection**: Users can select from supported languages (C, C++, Python, Node.js, React) to initialize their coding environment.
+- **Container Management**: Upon creating a room, a new container is spun up, and the base code is copied from an AWS S3 store to the container using Next.js server actions.
 
-## What's inside?
+### Editor Page
+- **Real-Time Code Collaboration**: The main editor page at "editor/:roomId" is equipped with @monaco-editor/react, enabling real-time code editing.
+- **App Bar**: The top app bar includes the title "Code Collab" and a theme toggle button.
+- **Sidebar**: 
+  - **File Tab**: Contains a basic file tree component allowing users to create and delete files and folders.
+  - **Console Tab**: Features an iframe for displaying server output and an xterm terminal component connected to the backend via socket.io and node-pty.
 
-This Turborepo includes the following packages/apps:
+### Collaboration Infrastructure
+- **Y.js Integration**: The @monaco-editor/react editor is connected to Y.js using y-monaco and y-socket.io, enabling real-time collaborative editing.
+- **File Synchronization**: When a room is created, files from the S3 base/<language> directory are copied to code/<roomId> and transferred to the container. The files are read using the fs module and sent to the client through a socket.io connection.
+- **Y.Doc Management**: Each coding session creates a Y.Doc() with the roomId as its name. Each file in the session is represented as a y.Text() in the Y.Doc().
 
-### Apps and Packages
+### Tech Stack
+- **Frontend**: Next.js, @monaco-editor/react, shadcn/ui, yjs, y-monaco, y-socket.io, TurboRepo
+- **Backend**: Node.js, Express, socket.io, node-pty, AWS S3
+- **Containerization**: Docker (for container management)
+- **Real-Time Collaboration**: Y.js (for real-time data synchronization)
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+## Getting Started
+1. **Clone the repository**: 
+    ```bash
+    git clone https://github.com/McACE007/Code-Collab.git
+    ```
+2. **Install dependencies**:
+    ```bash
+    cd Code-Collab
+    npm install
+    ```
+3. **Set up environment variables**:
+   Create a `.env` file in the root directory of and add your configuration details, including AWS S3 credentials and other necessary settings.
+4. **Run the development server**:
+    ```bash
+    npm run dev
+    ```
+5. **Access the application**:
+   Open your browser and navigate to `http://localhost:3000`.
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+Code Collab aims to provide a robust platform for developers to collaborate in real-time, making coding together as seamless and productive as possible. We look forward to your feedback and contributions to improve the platform further.
+ | Join a Room | Editor Page |
+|------|-------|
+|<img src="./screenshots/join-a-room.png" width="600">|<img src="screenshots/editor.png" width="600">|
 
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
-```
-cd my-turborepo
-pnpm build
-```
-
-### Develop
-
-To develop all apps and packages, run the following command:
-
-```
-cd my-turborepo
-pnpm dev
-```
-
-### Remote Caching
-
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup), then enter the following commands:
-
-```
-cd my-turborepo
-npx turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
-npx turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
-- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
+| Editor Page with FileTree  | Editor Page with Console  |
+|------|-------|
+|<img src="./screenshots/editor-with-filetree" width="600">|<img src="screenshots/editor-with-console.png" width="600">|
